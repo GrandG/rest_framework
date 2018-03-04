@@ -42,6 +42,5 @@ def snippet_detail(request, id):
             return JsonResponse(serializer.data)
 
     if request.method == 'DELETE':
-        serializer = SnippetSerializer(snippet)
-        serializer.delete()
+        snippet.delete()
         return HttpResponse(status=204)
