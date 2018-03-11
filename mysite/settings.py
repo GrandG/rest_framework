@@ -122,6 +122,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# 自定义静态文件目录
+STATICFILES_DIRS = [
+    os.path.join(SETTINGS_DIR, 'static'),
+]
+
+# 部署时 python manage.py collectstatic 的目录
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 
 # rest api pagination
 REST_FRAMEWORK = {
