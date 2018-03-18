@@ -15,14 +15,26 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # SETTINGS_DIR 为项目主目录
 SETTINGS_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-BASE_DIR = os.path.dirname(SETTINGS_DIR)
+BASE_DIR = SETTINGS_DIR
+
+# 环境变量文件.env
+ENV_PATH = os.path.join(BASE_DIR, '.env')
+print('Import env form {}'.format(ENV_PATH))
+
+if os.path.exists(ENV_PATH):
+    with open(ENV_PATH, 'r', encoding='utf-8') as f:
+        for line in f:
+            vars = line.split('=')
+            if len(vars) == 2:
+                os.environ[vars[0].strip()] = vars[1].strip()
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '0)jzv9w87cqpp7ydz2hjy+n1lp0rf57e!n+v%0%5y7(fh$i3wm'
+# SECRET_KEY = '0)jzv9w87cqpp7ydz2hjy+n1lp0rf57e!n+v%0%5y7(fh$i3wm'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = True
@@ -133,7 +145,7 @@ STATICFILES_DIRS = [
 ]
 
 # 部署时 python manage.py collectstatic 的目录
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
 
 # rest api pagination
